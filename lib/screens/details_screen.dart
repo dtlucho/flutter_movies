@@ -7,10 +7,13 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: change to movie instance
     final String movie = ModalRoute.of(context)!.settings.arguments.toString();
-    return const Scaffold(
+    return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(),
+          const _CustomAppBar(),
+          SliverList(
+            delegate: SliverChildListDelegate([const _PosterAndTitle()]),
+          ),
         ],
       ),
     );
@@ -46,6 +49,64 @@ class _CustomAppBar extends StatelessWidget {
           image: NetworkImage('https://via.placeholder.com/300x400'),
           fit: BoxFit.cover,
         ),
+      ),
+    );
+  }
+}
+
+class _PosterAndTitle extends StatelessWidget {
+  const _PosterAndTitle({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    return Container(
+      margin: const EdgeInsets.only(top: 20.0),
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: const FadeInImage(
+              placeholder: AssetImage('assets/no-image.jpg'),
+              image: NetworkImage('https://via.placeholder.com/200x300'),
+              height: 150,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 20.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'movie.title',
+                style: textTheme.headline5,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+              Text(
+                'movie.originalitle',
+                style: textTheme.subtitle1,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.star_outline,
+                    size: 15.0,
+                    color: Colors.grey,
+                  ),
+                  const SizedBox(width: 5.0),
+                  Text(
+                    'movie.voteAverage',
+                    style: textTheme.caption,
+                  )
+                ],
+              )
+            ],
+          )
+        ],
       ),
     );
   }
