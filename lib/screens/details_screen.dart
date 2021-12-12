@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_movies/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -12,7 +13,11 @@ class DetailsScreen extends StatelessWidget {
         slivers: [
           const _CustomAppBar(),
           SliverList(
-            delegate: SliverChildListDelegate([const _PosterAndTitle()]),
+            delegate: SliverChildListDelegate([
+              const _PosterAndTitle(),
+              const _Overview(),
+              const CastingCards(),
+            ]),
           ),
         ],
       ),
@@ -37,6 +42,7 @@ class _CustomAppBar extends StatelessWidget {
           width: double.infinity,
           alignment: Alignment.bottomCenter,
           color: Colors.black12,
+          padding: const EdgeInsets.only(bottom: 10.0),
           child: const Text(
             'movie.title',
             style: TextStyle(
@@ -107,6 +113,22 @@ class _PosterAndTitle extends StatelessWidget {
             ],
           )
         ],
+      ),
+    );
+  }
+}
+
+class _Overview extends StatelessWidget {
+  const _Overview({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+      child: Text(
+        'data',
+        textAlign: TextAlign.justify,
+        style: Theme.of(context).textTheme.subtitle1,
       ),
     );
   }
