@@ -9,13 +9,14 @@ class MoviesProvider extends ChangeNotifier {
   final String _baseUrl = 'api.themoviedb.org';
   final String _language = 'en-US';
 
+  List<Movie> nowPlayingMovies = [];
+
   MoviesProvider() {
     print("MoviesProvider inicializado");
     getNowPlayingMovies();
   }
 
   getNowPlayingMovies() async {
-    print('getNowPlayingMovies');
     var url = Uri.https(
       _baseUrl,
       '/3/movie/now_playing',
@@ -27,7 +28,10 @@ class MoviesProvider extends ChangeNotifier {
     );
 
     final response = await http.get(url);
-    final nowPlaying = NowPlayingResponse.fromJson(response.body);
-    print(nowPlaying.results[0].title);
+    final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);
+
+    nowPlayingMovies = nowPlayingResponse.results;
+
+    notifyListeners();
   }
 }
