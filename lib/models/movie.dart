@@ -32,6 +32,7 @@ class Movie {
   bool video;
   double voteAverage;
   int voteCount;
+  String? heroId;
 
   get fullPosterImg => posterPath != null
       ? 'https://image.tmdb.org/t/p/w500/$posterPath'
